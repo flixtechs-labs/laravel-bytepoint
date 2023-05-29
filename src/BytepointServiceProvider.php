@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace FlixtechsLabs\Bytepoint;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
+use FlixtechsLabs\Bytepoint\Commands\BytepointCommand;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class BytepointServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +16,10 @@ class SkeletonServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('skeleton')
+            ->name('laravel-bytepoint')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_skeleton_table')
-            ->hasCommand(SkeletonCommand::class);
+            ->hasMigration('create_laravel-bytepoint_table')
+            ->hasCommand(BytepointCommand::class);
     }
 }

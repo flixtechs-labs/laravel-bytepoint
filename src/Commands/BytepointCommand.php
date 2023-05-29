@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace FlixtechsLabs\Bytepoint\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class BytepointCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-bytepoint';
 
     public $description = 'My command';
 
