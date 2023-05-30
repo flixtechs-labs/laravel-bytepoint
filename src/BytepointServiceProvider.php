@@ -2,10 +2,10 @@
 
 namespace FlixtechsLabs\Bytepoint;
 
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 use FlixtechsLabs\Bytepoint\Commands\BytepointCommand;
 use Illuminate\Http\UploadedFile;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class BytepointServiceProvider extends PackageServiceProvider
 {
@@ -29,7 +29,7 @@ class BytepointServiceProvider extends PackageServiceProvider
        parent::boot();
 
        UploadedFile::macro('bytepoint', function (array $options = []) {
-          app(Bytepoint::class)->optimizeUploadedFile($this, $options);
+           app(Bytepoint::class)->optimizeUploadedFile($this, $options);
 
            return new UploadedFile(
                $this->getRealPath(),

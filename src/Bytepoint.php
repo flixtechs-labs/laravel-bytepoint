@@ -9,24 +9,18 @@ class Bytepoint
 {
     /**
      * Send image to bytepoint and retrieve optimized image
-     *
-     * @param string $source
-     * @param string $destination
-     * @param string $fileName
-     * @param array $options
-     * @return void
      */
     public function optimize(string $source, string $destination, string $fileName = '', array $options = []): void
     {
         $options = array_merge([
-            'type' => 'jpeg'
+            'type' => 'jpeg',
         ], $options);
 
         $response = Http::attach('image', file_get_contents($source), $fileName ?: 'image')
             ->withToken(config('bytepoint.token'))
             ->acceptJson()
             ->post(config('bytepoint.url'), [
-                'type' => $options['type']
+                'type' => $options['type'],
             ]);
 
         if ($response->successful()) {
@@ -39,10 +33,6 @@ class Bytepoint
 
     /**
      * Optimize uploaded file
-     *
-     * @param UploadedFile $file
-     * @param array $options
-     * @return void
      */
     public function optimizeUploadedFile(UploadedFile $file, array $options = []): void
     {

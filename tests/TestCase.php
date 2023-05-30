@@ -2,9 +2,9 @@
 
 namespace FlixtechsLabs\Bytepoint\Tests;
 
+use FlixtechsLabs\Bytepoint\BytepointServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use FlixtechsLabs\Bytepoint\BytepointServiceProvider;
 
 class TestCase extends Orchestra
 {
