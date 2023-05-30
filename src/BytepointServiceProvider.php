@@ -5,6 +5,7 @@ namespace FlixtechsLabs\Bytepoint;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use FlixtechsLabs\Bytepoint\Commands\BytepointCommand;
+use Illuminate\Http\UploadedFile;
 
 class BytepointServiceProvider extends PackageServiceProvider
 {
@@ -22,4 +23,21 @@ class BytepointServiceProvider extends PackageServiceProvider
             ->hasMigration('create_laravel-bytepoint_table')
             ->hasCommand(BytepointCommand::class);
     }
+
+   public function boot(): void
+   {
+       parent::boot();
+
+       UploadedFile::macro('bytepoint', function (array $options = []) {
+          app(Bytepoint::class)->optimizeUploadedFile($this, $options);
+
+           return new UploadedFile(
+               $this->getRealPath(),
+               $this->getClientOriginalName(),
+               $this->getMimeType(),
+               null,
+               true
+           );
+       });
+   }
 }
