@@ -5,15 +5,19 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/flixtechs-labs/laravel-bytepoint/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/flixtechs-labs/laravel-bytepoint/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/flixtechs-labs/laravel-bytepoint.svg?style=flat-square)](https://packagist.org/packages/flixtechs-labs/laravel-bytepoint)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Optimize uploaded images on the fly with Bytepoint in Laravel. Fits nicely into your existing workflow
 
-## Support us
+```php
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-bytepoint.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-bytepoint)
+$file = $request->file('image');
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
+$file->bytepoint([
+	'type' => 'jpeg'
+])
+ ->store('avatars');
 
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+```
+
 
 ## Installation
 
@@ -23,12 +27,6 @@ You can install the package via composer:
 composer require flixtechs-labs/laravel-bytepoint
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-bytepoint-migrations"
-php artisan migrate
-```
 
 You can publish the config file with:
 
@@ -40,21 +38,66 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'token' => env('BYTEPOINT_TOKEN', ''),
+    'url' => env('BYTEPOINT_URL', ''),
 ];
 ```
 
-Optionally, you can publish the views using
+## Usage
+To use this package you to first to obtain an API token from Bytepont
+
+Visit https://bytepont.flixtechs.co.zw and create an account
+
+On the profile page at the bottom click on "generate token" and copy the token to your .env file as follows
 
 ```bash
-php artisan vendor:publish --tag="laravel-bytepoint-views"
+BYTEPOINT_TOKEN=XXXXXX
 ```
 
-## Usage
+Add another optional enviroment variable
+
+```bash
+BYTEPOINT_URL=https://bytepoint.flixtechs.co.zw/api/v1/images
+```
+
+After this, all you need to do is hook bytepoint into your existing workflow.
+
+This package adds a fluent `bytepoint()` helper to the `UploadedFile` object which accepts an array options as arguments.
+
+Currently you can only specifiy the resulting file type, more options coming soon!
 
 ```php
-$bytepoint = new FlixtechsLabs\Bytepoint();
-echo $bytepoint->echoPhrase('Hello, FlixtechsLabs!');
+$request->file('image')->bytepoint(['type' => 'resulting type'])->store('avatars');
 ```
+
+list of accepted file types
+
+- webp
+- png
+- jpeg
+
+Just call bytepoint before you save the file storage or any other media library that you are using
+
+## Optimizing existing images
+
+You can also optimize existing images using the Bytepoint facade
+
+```php
+use  FlixtechsLabs\Bytepoint\Facades\Bytepoint;
+
+Bytepoint::optimize($filePath, $destinationPath, $fileName = '', $options = []);
+
+```
+
+The parameters are as follows
+
+- the file `$filePath` is the path to file you want to optimize
+- `$destinationPath` is the path to save the optimized file
+- `$fileName` is the name of the file, this is optional though
+- `$options` an array of options to tell bytepoint how to optimize the image, currently you can only set the resulting file to either `webp,jpeg,png`
+
+
+
 
 ## Testing
 
