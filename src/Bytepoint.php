@@ -9,6 +9,12 @@ class Bytepoint
 {
     /**
      * Send image to bytepoint and retrieve optimized image
+     *
+     * @param string $source
+     * @param string $destination
+     * @param string $fileName
+     * @param array $options
+     * @return void
      */
     public function optimize(string $source, string $destination, string $fileName = '', array $options = []): void
     {
@@ -33,6 +39,10 @@ class Bytepoint
 
     /**
      * Optimize uploaded file
+     *
+     * @param UploadedFile $file
+     * @param array $options
+     * @return void
      */
     public function optimizeUploadedFile(UploadedFile $file, array $options = []): void
     {
